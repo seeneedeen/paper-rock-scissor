@@ -25,32 +25,32 @@ server.on('connection', (socket) => {
   var clientAddress = `${socket.remoteAddress}:${socket.remotePort}`;
   console.log(`new client connected: ${clientAddress}`);
   sockets.push(socket);
-  players['player1'].write('Choose: paper scissor rock');
+  players['player1'].write('Choose: paper scissor hammer');
   socket.on('data', (data) => {
     console.log(`Client ${clientAddress}: ${data}`);
     switch (currentPlayer) {
       case 1:
         if (
-          data.includes('rock') ||
+          data.includes('scissor') ||
           data.includes('paper') ||
           data.includes('hammer')
         ) {
           choice1 = data
           players[`player1`].write('you choose ' + data);
           currentPlayer++;
-          players[`player${currentPlayer}`].write('Choose: PAPER SCISSOR ROCK')
+          players[`player${currentPlayer}`].write('Choose: paper scissor hammer')
         }
         break;
       case 2:
         if (
-          data.includes('rock') ||
+          data.includes('scissor') ||
           data.includes('paper') ||
           data.includes('hammer')
         ) {
           choice2 = data
           players[`player2`].write('you choose ' + data);
-          if (choice1 == "rock" ){
-              if(choice2 == "rock"){
+          if (choice1 == "hammer" ){
+              if(choice2 == "hammer"){
                 players[`player1`].write("DRAW");
                 players[`player2`].write("DRAW");
             }
@@ -62,8 +62,9 @@ server.on('connection', (socket) => {
                 players[`player1`].write("YOU LOSE");
                 players[`player2`].write("YOU WIN");
             }
+          }
           else if(choice1 == "scissor"){
-              if(choice2 == "rock"){
+              if(choice2 == "hammer"){
                 players[`player1`].write("YOU LOSE");
                 players[`player2`].write("YOU WIN");
               }
@@ -76,8 +77,9 @@ server.on('connection', (socket) => {
                 players[`player2`].write("YOU LOSE");
               }
           }
+        
           else if(choice1 == "paper"){
-              if(choice2 == "rock"){
+              if(choice2 == "hammer"){
                 players[`player1`].write("YOU WIN");
                 players[`player2`].write("YOU LOSE");
               }
@@ -90,7 +92,6 @@ server.on('connection', (socket) => {
                 players[`player2`].write("DRAW");
               }
           }
-            }
         }
         break;
     }
